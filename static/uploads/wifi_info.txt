@@ -1,0 +1,21 @@
+
+Security settings
+-----------------
+    Authentication         : WPA2-Personal
+    Cipher                 : CCMP
+    Authentication         : WPA2-Personal
+    Cipher                 : GCMP
+    Security key           : Present
+    Key Content            : PLDTWIFI@DORM4321
+
+
+
+https://192.168.1.1/
+admin
+HackedMe@1234
+=============
+
+https://192.168.1.1/PLDTadminLogin
+adminpldt
+HackedMe@1234
+=============

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="side-pages">
+            <img src="../static/img/ub.png" alt="UB Logo">
+            <div class="side-links">
+                <a href="/convert">Convert</a>
+                <a href="/book">Lesson</a>
+                <a id="logoutButton" style="cursor: pointer;">Logout</a>
+            </div>
+        </div>
+        
+        <div class="profile-container">
+            <ion-icon id="back" name="arrow-back-circle"></ion-icon>
+            <div class="profile-content">
+                <h1 style="text-transform: uppercase; background-color: maroon; color: white; padding: 10px; margin-top: -150px; filter: drop-shadow(10px 10px 2px #999);" >Profile</h1>
+                <div class="profile-details">
+                    <div class="profile-info">
+                        <h2>User ID: <span id="user-id">Loading...</span></h2>
+                        <h2>Name: <span id="user-name">Loading...</span></h2>
+                        <center> 
+                            <button class="edit-btn" onclick="openEditPopup()">Edit</button> 
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Popup Form -->
+        <div class="popup" id="editPopup">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closeEditPopup()">&times;</span>
+                <h2>Edit Profile</h2>
+                <form id="editForm">
+                    <p><strong>User ID:</strong> <input type="text" id="user-id-input" value="Loading..." readonly style="border: none;"></p> <!-- User ID field (read-only) -->
+                    <label for="name"> <strong>Name:</strong> </label>
+                    <input type="text" id="name" name="name" value="" required>
+                    <button type="submit">Save</button>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            // JavaScript to navigate back when the back icon is clicked
+            document.getElementById('back').addEventListener('click', function() {
+                window.history.back();
+            });
+
+            // Function to open the edit popup
+            function openEditPopup() {
+                document.getElementById('editPopup').style.display = 'block';
+
+                // Get User ID from the page and display it in the form
+                const userId = document.getElementById('user-id').textContent;
+                document.getElementById('user-id-input').value = userId;
+
+                // Get the user's name and set it in the name input field
+                const userName = document.getElementById('user-name').textContent;
+                document.getElementById('name').value = userName;
+            }
+
+            // Function to close the edit popup
+            function closeEditPopup() {
+                document.getElementById('editPopup').style.display = 'none';
+            }
+
+            // Handle form submission to update user details (only name)
+            document.getElementById('editForm').addEventListener('submit', async function(event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                // Get the full name from the input field
+                const fullName = document.getElementById('name').value;
+
+                // Split the full name into firstName and lastName
+                const nameParts = fullName.split(' ');
+                const firstName = nameParts[0]; // First part is the first name
+                const lastName = nameParts[1] || ''; // If there's no second part, set lastName as empty string
+
+                // Get the user ID
+                const userId = document.getElementById('user-id-input').value;
+
+                // Send the update request to the backend
+                try {
+                    fetch(`https://audio-learn-cec9542ab0f5.herokuapp.com/api/users/editName/${userId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',  // This ensures cookies (session) are sent with the request
+                        body: JSON.stringify({
+                            firstName: firstName,
+                            lastName: lastName
+                        })
+                    });
+
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        alert("Profile updated successfully!");
+                        // Optionally, close the popup or refresh the user data on the page
+                        closeEditPopup();
+                    } else {
+                        alert("Error updating profile: " + result.message);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred while updating your profile.');
+                }
+            });
+        </script>
+
+        <script src="script.js"></script>
+        <script src="{{ url_for('static', filename='credentials.js') }}"></script>
+
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    </body>
+</html>

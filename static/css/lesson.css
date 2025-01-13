@@ -1,0 +1,493 @@
+* {
+    padding: 0;
+    margin: 0;
+    scroll-behavior: smooth;
+
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: white;
+
+    background-image: url("../img/bg_convert.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+}
+
+.navbar {
+    width: 100%;
+    height: auto;
+    background-color: maroon;
+
+    text-transform: uppercase;
+}
+
+
+
+.navbar ul {
+    display: flex;
+    padding: 20px;
+}
+
+.navbar li {
+    list-style: none;
+    margin: 10px;
+    padding: 20px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+.navbar li a {
+    color: white;
+    text-decoration: none;
+}
+
+
+
+.navbar li a:hover {
+    font-size: 40px;
+    transform: translateY(-5px);
+    
+    font-size: 20px;
+
+}
+
+.logo {
+    width: 20%;
+    height: 3vh;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    padding: 30px;
+
+}
+
+.logo img {
+    padding: 20px;
+    width: auto;
+    height: auto;
+}
+
+
+.floating-button {
+    position: fixed;
+    width: 4pc;
+    height: 4pc;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px;
+    font-size: 20px;
+    background-color: maroon;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .floating-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
+    background-color: white;
+    color: maroon;
+    font-size: 25px;
+    transition: transform 0.2s ease
+  }
+
+
+
+.container {
+    width: 100%;
+    height: 100vh;
+}
+
+.con-card {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin: 0 auto;
+    align-items: center; /* Centers the grid within the container */
+}
+
+.head-con {
+    margin: 20px;
+    background-color: #999;
+    text-align: center;
+}
+
+.head-con h1 {
+    padding: 10px;
+    background-color: maroon;
+    color: white;
+}
+
+
+.books-grid {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 20px; 
+    justify-content: center; 
+    width: 100%;
+    margin: 0 auto; 
+}
+
+.book-card {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: transform 0.3s;
+    filter: drop-shadow(14px 14px 2px #999);
+    border: 10px solid maroon;
+    flex: 1 1 calc(25% - 40px);
+    max-width: 400px;
+}
+
+.book-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.book-card h3 {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+.book-card p {
+    color: #555;
+    font-size: 0.9em;
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+}
+
+
+/* Bookmark Button */
+#bookmark-button {
+    background-color: maroon;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 50%;
+    font-size: 18px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+#bookmark-button:hover {
+    background-color: darkred;
+}
+
+/* Bookmark Container Items */
+#bookmark-container ul li {
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+}
+
+#bookmark-container ul li:last-child {
+    border-bottom: none;
+}
+
+#bookmark-container button {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+
+.selected {
+    border: 2px solid maroon;  /* Change to your desired color */
+    padding: 5px;  /* Optional, if you want to add some space around the paragraph */
+}
+
+
+
+.disclaimer-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f8f8f8;
+    border-top: 1px solid #ddd;
+    padding: 10px 20px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    z-index: -999;
+}
+
+
+.disclaimer {
+    text-align: center;
+    font-size: 17px;
+    color: #333;
+    line-height: 1.5;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Mobile View */
+@media (max-width: 768px) {
+
+    .logo {
+        height: 30px;
+        margin: 10px auto;
+
+    }
+
+    .navbar{
+        width: 100%;
+        border-bottom: 10px solid white;
+    }
+    .navbar-list {
+        flex-direction: column;
+        align-items: flex-start;
+    
+    }
+
+    .nav-item {
+        margin: 10px 0;
+    }
+
+    .nav-item a {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+
+    .hamburger-icon {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        height: 30px;
+    }
+
+
+    #userDropdown {
+        width: 200px; 
+        margin-right: 20px;
+        right: 0;
+        top: 45px; 
+    }
+
+
+    .navbar-list.mobile-nav {
+        display: none;
+    }
+
+    .navbar-list.mobile-nav.open {
+        display: block;
+    }
+
+    #userIcon {
+        height: 100px;
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 0px;
+        margin:30px;
+       
+    }
+
+    .con-img {
+        display: none;
+    }
+
+
+    .books-grid {
+        display: flex;
+        flex-direction: column; /* Stack items vertically */
+        gap: 20px; /* Space between book cards */
+        width: 90%; /* Take full width */
+        align-items: center; /* Center align the cards */
+        margin: 0 auto;
+    }
+
+
+    .book-card {
+        width: 90%; /* Adjust width for smaller screens */
+        max-width: 400px; /* Optional: Set a max width */
+        margin: 0 auto; /* Center the cards horizontally */
+    }
+
+    .book-card img {
+        width: 100%; /* Ensure the image scales properly */
+        height: auto;
+    }
+    
+}
+
+
+
+
+
+/* Small mobile screens */
+@media (max-width: 480px) {
+
+
+    .logo img{
+        height: 250px;
+        margin: 10px auto;
+
+    }
+
+    .nav-item a {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+
+    #userIcon {
+        height: 100px;
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 0px;
+        margin:30px;
+    }
+
+    .con-img {
+        display: none;
+    }
+
+    .container-head {
+        width: 100%;
+        margin: 0 auto;
+ 
+    }
+
+    .con-description {
+
+        margin: 50px;
+        width: 100%;
+        
+    }
+
+    .con-description p {
+        width: 100%; /* Keep content within the container */
+        text-align: justify;
+        margin: 0;
+  
+    }
+
+    #userDropdown {
+        width: 200px; 
+        margin-right: 20px;
+        right: 0;
+        top: 45px; 
+    }
+
+    .container {
+        height: 80vh;
+        margin: 0 auto;
+    }
+
+
+    .con-file {
+        background-color: white;
+        border: 5px solid #999;
+        width: 40%;
+        border-radius: 10px;
+        height: auto;
+        margin: 50px;
+       
+    }
+
+    #voices {
+        width: 100%;
+    }
+
+
+    
+    button {
+        margin: 10px;
+        margin-left: -15px;
+    }
+    
+    #result textarea, h2, #stopBtn, 
+    #resumeBtn, #pauseBtn, #readAloudBtn{
+        display: none;
+    }
+
+    .books-grid {
+        display: flex;
+        flex-direction: column; /* Stack items vertically */
+        gap: 20px; /* Add space between book cards */
+        width: 100%; /* Full width of the container */
+        margin: 0 auto; /* Center the grid container */
+        align-items: center; /* Center align the items */
+    }
+
+    .book-card {
+        width: 90%; /* Adjust width to fit container */
+        max-width: 400px; /* Optional: Set a max width */
+        margin: 0 auto; /* Center align each card */
+    }
+
+    .book-card img {
+        width: 100%; /* Make the image responsive */
+        height: auto;
+    }
+
+    
+
+
+    .disclaimer-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #f8f8f8;
+        border-top: 1px solid #ddd;
+        padding: 10px 20px;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        z-index: -999;
+    }
+
+    .disclaimer {
+        width: 70%;
+        text-align: center;
+        font-size: 8px;
+        color: #333;
+        line-height: 1.5;
+        margin: 0 auto;
+    }
+}

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docu-Viewer</title>
+    
+    <link rel="stylesheet" href="../static/css/styles2.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/credentials.css') }}">
+</head>
+<style>
+
+.word {
+    transition: background-color 0.2s;
+}
+
+.word.highlight {
+    background-color: yellow;
+}
+
+span {
+margin: 5px;
+
+}
+
+/* Button Styles */
+.delete-button {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    z-index: 1000;
+    background-color: maroon;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    
+}
+
+.icon {
+    font-size: 15px; /* Adjust size as needed */
+}
+
+</style>
+<body>
+   
+    <button id="delete-btn" class="delete-button" data-filename="{{ title }}">
+        <ion-icon name="trash" class="icon"></ion-icon>
+    </button>
+    
+    
+    
+
+    
+    <div class="navbar">
+        <ul class="navbar-list">
+            <div class="logo">
+                <img src="../static/img/ublogo.png" alt="University Logo">
+            </div>
+    
+            <li class="nav-item"><a href="/convert">Convert</a></li>
+            <li class="nav-item"><a href="/book">Lessons</a></li>
+            <li id="userContainer" class="nav-item">
+                <img src="/static/img/user.png" alt="User Icon" id="userIcon">
+                <div id="userDropdown">
+                    <p>Username</p>
+                    <p style="font-size: 12px; margin-top: -10px;">User ID: <span>000000</span></p>
+                    <a href="/profile"><button id="profileButton">Profile</button></a>
+                    <button id="logoutButton">Logout</button>
+                </div>
+            </li>
+    
+            <!-- Hamburger icon for mobile -->
+            <!-- <li class="hamburger-icon" id="hamburgerIcon">
+                <ion-icon name="menu-outline"></ion-icon>
+            </li> -->
+        </ul>
+    </div>
+
+
+    <div class="con-commands">
+        <div class="commands">
+            <div class="btn-read">
+                <button id="read-btn"><ion-icon name="book"></ion-icon></button>
+            </div>
+
+            <div class="btn-pause">
+                <button id="pause-btn" ><ion-icon name="pause"></ion-icon></button>
+            </div>
+
+            <div class="btn-stop">
+                <button id="stop-btn" ><ion-icon name="stop"></ion-icon></button>
+            </div>
+
+            <div class="btn-command">
+                <button id="voiceCommand-btn"><ion-icon name="mic"></ion-icon></button>
+            </div>
+
+            <div class="btn-command">
+                <button id="bookmark-button"><ion-icon name="bookmark"></ion-icon></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bookmark Popup Container -->
+<div id="bookmark-container" style="
+position: fixed;
+bottom: 0;
+left: 50%;
+transform: translateX(-50%);
+width: 80%;
+background-color: white;
+border: 1px solid #ccc;
+border-radius: 10px;
+padding: 15px;
+display: none;
+z-index: 1002;
+box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+">
+<h3 style="margin-bottom: 20px;">Saved Bookmarks: </h3>
+
+
+<ul id="bookmarked-items" style="list-style: none; padding: 0; margin: 0;">
+    <!-- Dynamically added bookmarks -->
+</ul>
+<button id="close-bookmark-container" style="background-color: maroon; color: white; font-weight: bold; margin-top: 10px;">Close</button>
+</div>
+
+    
+
+
+    <button id="toggleCommandBar" style="position: fixed; bottom: 20px; right: 20px; z-index: 1001; font-weight: bold;">Voice
+        Commands</button>
+        
+
+    <div id="voiceCommandBar">
+        <h4>Available Voice Commands</h4>
+        <ul>
+            <li><strong>stop</strong> - Stop speech</li>
+            <li><strong>pause</strong> - Pause speech</li>
+            <li><strong>resume</strong> - Resume paused speech</li>
+            <li><strong>read</strong> - Read the text</li>
+            <li><strong>go to page X</strong> - Navigate to page X</li>
+            <li><strong>next page</strong> - Navigate to the next page</li>
+            <li><strong>previous page</strong> - Navigate to the previous page</li>
+            <li><strong>go to home</strong> - Go to the home page</li>
+            <li><strong>go to paragraph X</strong> - Navigate to paragraph X</li>
+            <li><strong>go to topic [topic name]</strong> - Navigate to a specific topic</li>
+        </ul>
+        <button id="closeCommandBar" style="background-color: white; color: black; font-weight: bold;">Close</button>
+    </div>
+
+
+    <div class="container">
+        <div class="con-card">
+            <!-- Document Title -->
+            <h1>{{ title }}</h1>
+    
+            <!-- Loop through paragraphs -->
+            {% for paragraph in content %}
+            <div class="paragraph-container" id="paragraph-{{ loop.index }}">
+                <button class="bookmark-btn" onclick="toggleBookmark({{ loop.index }})" aria-label="Bookmark this paragraph">
+                    <ion-icon name="bookmarks"></ion-icon>
+                </button>
+                <p></p>
+                <br>
+    
+                <!-- Paragraph content -->
+                <p style="border: 2px solid #999; padding: 10px; border-radius: 10px;" >{{ paragraph }}</p>
+            </div>
+            {% endfor %}
+    
+            <!-- Dropdown for voice selection -->
+            <div class="voice-selection">
+                <label for="voiceSelect" aria-label="Select a voice for text-to-speech">Choose Voice:</label>
+                <select id="voiceSelect" aria-label="Text-to-Speech Voice Selection"></select>
+            </div>
+    
+            <!-- Pagination Section -->
+           
+        </div>
+    </div>
+    
+    
+    <!-- Your existing scripts -->
+    <script src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" type="module"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+   
+<script src="{{ url_for('static', filename='docu.js') }}"></script>
+<script src="{{ url_for('static', filename='credentials.js') }}"></script>
+<script src="{{ url_for('static', filename='lesson.js') }}"></script>
+
+    
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Audio Converter</title>
+   
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/lesson.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/credentials.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/upload.css') }}">
+
+</head>
+
+<body>
+    <div class="navbar">
+        <ul class="navbar-list">
+            <div class="logo">
+                <img src="../static/img/ublogo.png" alt="University Logo">
+            </div>
+    
+            <li class="nav-item"><a href="/convert">Convert</a></li>
+            <li class="nav-item"><a href="/book">Lessons</a></li>
+            <li id="userContainer" class="nav-item">
+                <img src="/static/img/user.png" alt="User Icon" id="userIcon">
+                <div id="userDropdown">
+                    <p>Username</p>
+                    <p style="font-size: 12px; margin-top: -10px;">User ID: <span>000000</span></p>
+                    <a href="/profile"><button id="profileButton">Profile</button></a>
+                    <button id="logoutButton">Logout</button>
+                </div>
+            </li>
+    
+            <!-- Hamburger icon for mobile -->
+            <!-- <li class="hamburger-icon" id="hamburgerIcon">
+                <ion-icon name="menu-outline"></ion-icon>
+            </li> -->
+        </ul>
+    </div>
+
+
+    <!-- Centered Container for Books Grid -->
+    <div class="container">
+        <div class="head-con">
+            <h1>Learning Materials</h1>
+        </div>
+    
+        <div class="con-card">
+            <!-- Books Grid Section -->
+            <section class="books-grid">
+                <!-- Existing Static Books -->
+                <div class="book-card">
+                    <a href="/lesson/laborlaw1">
+                        <img src="../static/img/pc_book.png" alt="Book 1">
+                    </a>
+                    <h3>Labor Laws and Legislation</h3>
+                    <p>Atty. Alden Reuben B. Luna Ph.L.</p>
+                </div>
+                
+    
+                {% for module in modules %}
+                <div class="book-card">
+                    <a href="{{ url_for('docu_viewer', filename=module.file_path) }}">
+                        <img src="../static/img/file.png" alt="Book">
+                    </a>
+                    <h3>{{ module.title }}</h3>
+                    <p>{{ module.description }}</p>
+                </div>
+                {% endfor %}
+
+
+            </section>
+        </div>
+    </div>
+
+    <div class="disclaimer-container">
+        <div class="disclaimer">
+            <p>
+                <strong> All lesson content provided on this website is for educational use only.
+                    <br>
+                    The developers do not claim ownership of the educational materials or content. All rights
+                    reserved to its rightful owner.</strong>
+            </p>
+        </div>
+    </div>
+
+
+    <div id="overlay"></div>
+    
+
+    <button class="floating-button" id="add-modules"><ion-icon name="add-sharp"></ion-icon></button>
+
+    <div class="upload-con" id="upload-container" style="display: none;">
+        <div class="upload-head">
+            <h1>Upload Modules</h1>
+        </div>
+        
+        <form method="post" action="/upload_module" enctype="multipart/form-data">
+            <label for="title">Title</label><br>
+            <input type="text" name="title" id="title" required><br>
+            <input type="hidden" id="user_id" name="user_id" value=""> <!-- Replace with actual user ID -->
+
+            <label for="description">Description</label><br>
+            
+            <textarea name="description" id="description"></textarea><br>
+        
+            <input type="file" id="file-upload" name="file" style="display: none;" accept=".pdf, .doc, .docx, .txt" required>
+        
+            <button type="button" id="upload-btn">
+                <svg
+                    aria-hidden="true"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        stroke-width="2"
+                        stroke="#ffffff"
+                        d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+                        stroke-linejoin="round"
+                        stroke-linecap="round"
+                    ></path>
+                    <path
+                        stroke-linejoin="round"
+                        stroke-linecap="round"
+                        stroke-width="2"
+                        stroke="#ffffff"
+                        d="M17 15V18M17 21V18M17 18H14M17 18H20"
+                    ></path>
+                </svg>
+                ADD FILE
+            </button>
+        
+            <div id="file-info" class="file-name-container" style="display: none;">
+                <span id="file-name" class="file-name"></span>
+                <span id="remove-file" class="remove-file"><ion-icon name="close-circle"></ion-icon></span>
+            </div>
+        
+            <button type="submit" id="submit" style="display: none;">
+                <div class="svg-wrapper-1">
+                    <div class="svg-wrapper">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            width="30"
+                            height="30"
+                            class="icon"
+                        >
+                            <path
+                                d="M22,15.04C22,17.23 20.24,19 18.07,19H5.93C3.76,19 2,17.23 2,15.04C2,13.07 3.43,11.44 5.31,11.14C5.28,11 5.27,10.86 5.27,10.71C5.27,9.33 6.38,8.2 7.76,8.2C8.37,8.2 8.94,8.43 9.37,8.8C10.14,7.05 11.13,5.44 13.91,5.44C17.28,5.44 18.87,8.06 18.87,10.83C18.87,10.94 18.87,11.06 18.86,11.17C20.65,11.54 22,13.13 22,15.04Z"
+                            ></path>
+                        </svg>
+                    </div>
+                </div>
+                <span>Save</span>
+            </button>
+        </form>
+        
+    </div>
+
+
+
+    <script>
+        const fileUpload = document.getElementById('file-upload');
+        const fileNameDisplay = document.getElementById('file-name');
+        const fileInfoContainer = document.getElementById('file-info');
+        const removeFileBtn = document.getElementById('remove-file');
+        const uploadBtn = document.getElementById('upload-btn');
+        const submitBtn = document.getElementById('submit');
+    
+        // Allowed file types
+        const allowedExtensions = ['pdf', 'doc', 'docx', 'txt'];
+    
+        // Trigger file input on button click
+        uploadBtn.addEventListener('click', function () {
+            fileUpload.click();
+        });
+    
+        // Display file name and hide button when a valid file is selected
+        fileUpload.addEventListener('change', function () {
+            if (fileUpload.files.length > 0) {
+                const file = fileUpload.files[0];
+                const fileExtension = file.name.split('.').pop().toLowerCase();
+    
+                // Validate file type
+                if (!allowedExtensions.includes(fileExtension)) {
+                    alert('Invalid file type. Please upload a PDF, Word, or TXT file.');
+                    fileUpload.value = ''; // Clear the file input
+                    return;
+                }
+    
+                // Update UI with the selected file
+                fileNameDisplay.textContent = file.name;
+                uploadBtn.style.display = 'none'; // Hide the "ADD FILE" button
+                fileInfoContainer.style.display = 'flex'; // Show the file info container
+                submitBtn.style.display = 'flex'; // Show the submit button
+
+            }
+        });
+    
+        // Remove file and reset interface
+        removeFileBtn.addEventListener('click', function () {
+            fileUpload.value = ''; // Clear the file input
+            fileNameDisplay.textContent = ''; // Clear the file name display
+            fileInfoContainer.style.display = 'none'; // Hide the file info container
+            uploadBtn.style.display = 'flex'; // Show the "ADD FILE" button
+            submitBtn.style.display = 'none'; // Hide the submit button
+        });
+
+
+
+
+
+
+
+
+
+        const addModulesBtn = document.getElementById('add-modules');
+        const overlay = document.getElementById('overlay');
+        const uploadContainer = document.getElementById('upload-container');
+        const closeUploadBtn = document.getElementById('close-upload');
+
+        // Open upload container
+        addModulesBtn.addEventListener('click', () => {
+            overlay.style.display = 'block';
+            uploadContainer.style.display = 'block';
+        });
+
+        // Close upload container by clicking close button
+        closeUploadBtn?.addEventListener('click', () => {
+            overlay.style.display = 'none';
+            uploadContainer.style.display = 'none';
+        });
+
+        // Close upload container when clicking on overlay (outside the container)
+        overlay.addEventListener('click', () => {
+            overlay.style.display = 'none';
+            uploadContainer.style.display = 'none';
+        });
+
+        // Prevent closing when clicking inside the upload container (this stops the event from propagating to the overlay)
+        uploadContainer.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent the click event from reaching the overlay
+        });
+
+
+
+        document.getElementById('file-upload').addEventListener('change', function () {
+            const fileName = this.files[0]?.name || '';
+            const fileInfo = document.getElementById('file-info');
+            const fileNameSpan = document.getElementById('file-name');
+            const removeFile = document.getElementById('remove-file');
+
+            if (fileName) {
+                fileNameSpan.textContent = fileName;
+                fileInfo.style.display = 'flex';
+                document.getElementById('submit').style.display = 'flex';
+            }
+
+            removeFile.addEventListener('click', function () {
+                document.getElementById('file-upload').value = '';
+                fileInfo.style.display = 'none';
+                document.getElementById('submit').style.display = 'none';
+            });
+        });
+
+
+
+
+
+  
+
+
+
+        
+
+    
+
+    </script>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='credentials.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/TextPlugin.min.js"></script>
+</body>
+
+</html>

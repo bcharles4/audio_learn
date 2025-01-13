@@ -1,0 +1,227 @@
+*{
+  margin: 0;
+  padding: 0;
+
+}
+
+
+.upload-con {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  z-index: 20;
+  width: 45%;
+  display: none;
+  margin: 20px auto;
+  border: 10px solid maroon;
+}
+
+.upload-head {
+  background-color: maroon;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  margin: 20px;
+  border-radius: 10px;
+}
+
+.upload-con h1 {
+  margin: 10px;
+}
+
+.upload-con form {
+  width: 90%;
+  margin: 20px auto;
+ 
+}
+
+.upload-con form label {
+ margin-bottom: 20px;
+}
+
+.upload-con form input {
+  width: 100%;
+  height: 1.8pc;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  border: 2px solid black;
+}
+
+.upload-con form textarea {
+  width: 100%;
+  height: 5pc;
+  border: 2px solid black;
+  margin-bottom: 20px;
+  border-radius: 4px;
+}
+
+
+
+
+
+.file-name-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 10px;
+
+  margin-right: 5px;
+  background-color: maroon;
+  color: white;
+  padding: 10px;
+
+  border-radius: 0.5rem;
+}
+
+.file-name {
+  font-size: 14px;
+  color: #555;
+  display: inline-block;
+  
+}
+
+.remove-file {
+  cursor: pointer;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+#upload-btn {
+  display: flex;
+}
+
+
+.file-name-container span {
+  color: white;
+}
+
+
+
+
+
+
+#upload-btn {
+  border: none;
+  display: flex;
+  padding: 0.75rem 1.5rem;
+  background-color: maroon;
+  color: #ffffff;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  vertical-align: middle;
+  align-items: center;
+  border-radius: 0.5rem;
+  user-select: none;
+  gap: 0.5rem;
+  box-shadow:
+    0 4px 6px -1px #488aec31,
+    0 2px 4px -1px #488aec17;
+  transition: all 0.6s ease;
+
+  margin: 0 auto;
+}
+
+#upload-btn:hover {
+  box-shadow:
+    0 10px 15px -3px #488aec4f,
+    0 4px 6px -2px #488aec17;
+}
+
+#upload-btn:focus,
+#upload-btn:active {
+  opacity: 0.85;
+  box-shadow: none;
+}
+
+#upload-btn svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+
+
+
+
+/* From Uiverse.io by Peary74 */ 
+#submit {
+  font-family: inherit;
+  font-size: 16px;
+  background: #212121;
+  color: white;
+  fill: rgb(155, 153, 153);
+  padding: 0.7em 1em;
+  padding-left: 0.9em;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  border-radius: 15px;
+  font-weight: 1000;
+
+  margin: 10px auto;
+}
+
+#submit span {
+  display: block;
+  margin-left: 0.3em;
+  transition: all 0.3s ease-in-out;
+  text-transform: capitalize;
+}
+
+#submit svg {
+  display: block;
+  transform-origin: center center;
+  transition: transform 0.3s ease-in-out;
+}
+
+#submit:hover {
+  background: #000;
+}
+
+#submit:hover .svg-wrapper {
+  transform: scale(1.25);
+  transition: 0.5s linear;
+}
+
+#submit:hover svg {
+  transform: translateX(1.2em) scale(1.1);
+  fill: #fff;
+}
+
+#submit:hover span {
+  opacity: 0;
+  transition: 0.5s linear;
+}
+
+#submit:active {
+  transform: scale(0.95);
+}
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .upload-con {
+      width: 80%;
+      margin: 20px auto;
+  }
+}
