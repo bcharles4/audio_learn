@@ -11,8 +11,8 @@
         <div class="side-pages">
             <img src="../static/img/ub.png" alt="UB Logo">
             <div class="side-links">
-                <a href="/convert">Convert</a>
-                <a href="/book">Lesson</a>
+                <a href="/convert" >Convert</a>
+                <li class="nav-item" style="text-decoration: none; list-style: none; "><a href="/book" style="  border-bottom: 1px solid #ccc;">Lessons</a></li>
                 <a id="logoutButton" style="cursor: pointer;">Logout</a>
             </div>
         </div>
@@ -115,6 +115,20 @@
                     alert('An error occurred while updating your profile.');
                 }
             });
+
+
+            document.addEventListener("DOMContentLoaded", () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+        const lessonsLink = document.querySelector('.nav-item a[href^="/book"]');
+        if (lessonsLink) {
+            lessonsLink.href = `/book/${user.usersID}`;
+        }
+    } else {
+        console.warn("User not logged in.");
+    }
+});
+
         </script>
 
         <script src="script.js"></script>
