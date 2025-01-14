@@ -12,7 +12,7 @@ body {
     height: 100vh;
     background-size: cover;
     background-repeat: no-repeat;
-    overflow: hidden;
+    
 }
 
 .navbar {
@@ -486,6 +486,10 @@ label {
         font-size: 12px;
     }
 
+    #voiceSelect {
+        width: 50%;
+    }
+
 
 }
 
@@ -552,4 +556,9 @@ label {
     #bookmarked-items button {
         width: 50%;
     }
+
+    #voiceSelect {
+        width: 50%;
+    }
+
 }
